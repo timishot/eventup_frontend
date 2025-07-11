@@ -12,9 +12,12 @@ import {useSearchParams} from "next/navigation";
 import CheckoutButton from "@/components/shared/CheckoutButton";
 
 
+type EventDetailsProps = {
+    params: Promise<{ id: string }>;
+};
 
-const EventDetails = ({ params }: { params: { id: string } }) => {
-    const { id } = params;
+const EventDetails = ({ params }: EventDetailsProps) => {
+    const { id } = use(params);
 
     const searchParams = useSearchParams();
     const page = searchParams.get("page") || "1";
