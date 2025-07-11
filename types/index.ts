@@ -22,7 +22,7 @@ export type CreateEventParams = {
         imageUrl: string
         startDateTime: Date
         endDateTime: Date
-        category: string
+        category_uuid: string
         price: string
         isFree: boolean
         url: string
@@ -31,20 +31,21 @@ export type CreateEventParams = {
 }
 
 export type UpdateEventParams = {
-    userId: string
+    userId: string | null
     event: {
-        _id: string
+        id: string | null
         title: string
         imageUrl: string
         description: string
         location: string
         startDateTime: Date
         endDateTime: Date
-        categoryId: string
+        category: string
         price: string
         isFree: boolean
         url: string
     }
+    accessToken: string | null
     path: string
 }
 
@@ -53,6 +54,8 @@ export interface IEvent {
     title: string;
     imageUrl: string;
     description: string;
+    location: string;
+    url: string;
     price?: string;
     isFree: boolean;
     startDateTime: Date;
@@ -82,14 +85,14 @@ export type GetAllEventsParams = {
 }
 
 export type GetEventsByUserParams = {
-    userId: string
-    limit?: number
-    page: number
+    accessToken: string;
+    page?: number;
+    limit?: number;
 }
 
 export type GetRelatedEventsByCategoryParams = {
-    categoryId: string
-    eventId: string
+    category: string | undefined
+    eventId: string | undefined
     limit?: number
     page: number | string
 }
@@ -125,7 +128,7 @@ export type CreateCategoryParams = {
 export type CheckoutOrderParams = {
     eventTitle: string
     eventId: string
-    price: string
+    price: string | undefined
     isFree: boolean
     buyerId: string
 }
@@ -162,6 +165,6 @@ export type RemoveUrlQueryParams = {
 }
 
 export type SearchParamProps = {
-    params: { id: string }
+    params: Promise<{ id: string }>;
     searchParams: { [key: string]: string | string[] | undefined }
 }

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import {useRouter} from "next/navigation";
 
 const Header = () => {
-    const route = useRouter()
+    const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
 
@@ -24,7 +24,9 @@ const Header = () => {
 
             if (res.ok) {
                 console.log('✅ Logged out');
-                route.push('/'); // Redirect to home page after logout
+                setIsAuthenticated(false);
+                setUserId(null);
+                router.push('/');
                 // Optionally redirect or refresh UI
             } else {
                 console.error('Logout failed');

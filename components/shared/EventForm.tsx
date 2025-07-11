@@ -27,21 +27,25 @@ import {Label} from "@/components/ui/label";
 import {Checkbox} from "@/components/ui/checkbox";
 import {useUploadThing} from "@/lib/uploadthing";
 import {useRouter} from "next/navigation";
-import {CreateEvent} from "@/lib/actions/event";
+import {CreateEvent, UpdateEvent} from "@/lib/actions/event";
 import {getAccessToken} from "@/lib/utils";
+import {IEvent} from "@/types";
+import {router} from "next/client";
 
 type EventFormProps = {
     userId: string | null;
     type: 'Create' | 'Update';
+    event?: IEvent,
+    eventId?: string
 }
 
-const EventForm = ({userId, type}: EventFormProps ) => {
+const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
     const [startDate, setStartDate] = useState(new Date());
     const Router = useRouter();
     const [accessToken, setAccessToken]  = useState<string | null>(null);
 
     const [files, setFiles] = useState<File[]>([]);
-    const initialValues = eventDefaultValues;
+    const initialValues = event && type === 'Update' ? { ...event, category: event.category?.name ,  startDateTime: new Date(event.startDateTime), endDateTime: new Date(event.endDateTime) } : eventDefaultValues;
     const {startUpload} = useUploadThing('imageUploader')
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
@@ -77,27 +81,65 @@ const EventForm = ({userId, type}: EventFormProps ) => {
          console.log('Submitted values:', values);
 
         if (type === "Create") {
-            console.log((userId))
-            const newEvent = await CreateEvent({
-                accessToken: accessToken,
-                event: {
-                    title: values.title,
-                    description: values.description,
-                    location: values.location,
-                    imageUrl: uploadedImageUrl as string,
-                    category: values.category,
-                    isFree: values.isFree,
-                    price: values.price,  // optional price
-                    url: values.url,
-                    startDateTime: values.startDateTime,
-                    endDateTime: values.endDateTime,
-                },
-                path: "/profile",
-            });
+            try {
+                const newEvent = await CreateEvent({
+                    accessToken: accessToken,
+                    event: {
+                        title: values.title,
+                        description: values.description,
+                        location: values.location,
+                        imageUrl: uploadedImageUrl as string,
+                        category_uuid: values.category,
+                        isFree: values.isFree,
+                        price: values.price,  // optional price
+                        url: values.url,
+                        startDateTime: values.startDateTime,
+                        endDateTime: values.endDateTime,
+                    },
+                    path: "/profile",
+                });
 
-            if (newEvent) {
-                form.reset();
-                Router.push(`/events/${newEvent.id}`);
+                if (newEvent) {
+                    form.reset();
+                    Router.push(`/events/${newEvent.id}`);
+                }
+            } catch (error) {
+                console.error("Error creating event:", error);
+            }
+        }
+        if (type === "Update") {
+            if (!eventId) {
+                console.error("Event ID is required for update");
+                router.back()
+                return;
+            }
+            try {
+                console.log("step up update event eventform", accessToken)
+                const updatedEvent = await UpdateEvent({
+                    userId,
+                    accessToken: accessToken,
+                    event: {
+                        id: eventId,
+                        title: values.title,
+                        description: values.description,
+                        location: values.location,
+                        imageUrl: uploadedImageUrl as string,
+                        category: values.category,
+                        isFree: values.isFree,
+                        price: values.price,  // optional price
+                        url: values.url,
+                        startDateTime: values.startDateTime,
+                        endDateTime: values.endDateTime,
+                    },
+                    path: `/events/${eventId}`,
+                });
+
+                if (updatedEvent) {
+                    form.reset();
+                    Router.push(`/events/${updatedEvent.id}`);
+                }
+            } catch (error) {
+                console.error("Error creating event:", error);
             }
         }
     }

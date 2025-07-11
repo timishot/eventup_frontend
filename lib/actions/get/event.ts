@@ -1,7 +1,7 @@
-// lib/server/event.ts (server-only logic)
+
 export async function GetEventById(id: string) {
     try {
-        const res = await fetch(`http://localhost:8000/api/events/${id}`, {
+        const res = await fetch(`http://localhost:8000/api/events/${id}/event/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -21,13 +21,14 @@ export async function GetEventById(id: string) {
     }
 }
 
-export async function deleteEvent({ eventId, path }: { eventId: string; path: string }) {
+export async function deleteEvent({ id, path, accessToken }: { id: string; path: string; accessToken: string | null }) {
     try {
-        const res = await fetch(`http://localhost:8000/api/events/${id}`, {
+        const res = await fetch(`http://localhost:8000/api/events/${id}/`, {
             method: "DELETE",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
             },
         });
 

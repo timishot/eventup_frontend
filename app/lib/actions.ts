@@ -1,4 +1,4 @@
-'use server';
+'use get';
 
 import {cookies} from "next/headers";
 
@@ -45,8 +45,8 @@ export async function clearAuthCookies() {
     cookieStore.set('session_access_token', '', { expires: new Date(0), path: '/' });
     cookieStore.set('session_refresh_token', '', { expires: new Date(0), path: '/' });
 
-    // In a real application, you would also call your authentication server
-    // here to invalidate the refresh token on the server-side.
+    // In a real application, you would also call your authentication get
+    // here to invalidate the refresh token on the get-side.
     // Example: await authService.invalidateRefreshToken(refreshToken);
 
     console.log('Auth cookies cleared.'); // Basic logging

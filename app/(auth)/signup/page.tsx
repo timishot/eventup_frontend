@@ -72,7 +72,7 @@ export default function SignUpPage() {
             const data = await res.json();
             console.log("✅ User created:", data);
 
-            // 2. Set secure cookies via API route (server-side)
+            // 2. Set secure cookies via API route (get-side)
             const cookieRes = await fetch("/api/auth/set-cookie", {
                 method: "POST",
                 headers: {
