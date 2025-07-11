@@ -18,22 +18,22 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
                         currency: 'usd',
                         unit_amount: price,
                         product_data: {
-                            name: order.eventTitle
+                            name: order.eventTitle,
                         }
                     },
                     quantity: 1
                 },
             ],
             metadata: {
-                eventId: order.eventId,
-                buyerId: order.buyerId,
+                eventId: order.eventId || "",
+                buyerId: order.buyerId || "",
             },
             mode: 'payment',
             success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
             cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
         });
 
-        redirect(session.url!)
+        redirect(session.url!);
     } catch (error) {
         throw error;
     }
