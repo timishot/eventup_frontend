@@ -127,10 +127,10 @@ export type CreateCategoryParams = {
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
     eventTitle: string
-    eventId: string
+    eventId: string | undefined
     price: string | undefined
     isFree: boolean
-    buyerId: string
+    buyerId: string | null
 }
 
 export type CreateOrderParams = {
