@@ -47,3 +47,4 @@ export async function deleteEvent({ id, path, accessToken }: { id: string; path:
         throw error;
     }
 }
+

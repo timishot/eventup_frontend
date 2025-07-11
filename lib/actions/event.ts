@@ -105,9 +105,10 @@ export async function getRelatedEvents({
         const searchParams = new URLSearchParams({
             category,
             eventId,
-            page: String(page),
-            limit: String(limit),
+            page: page.toString(),
+            limit: limit?.toString(),
         });
+
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/related/?${searchParams.toString()}`, {
             method: "GET",

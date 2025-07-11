@@ -91,10 +91,10 @@ export type GetEventsByUserParams = {
 }
 
 export type GetRelatedEventsByCategoryParams = {
-    category: string | undefined
-    eventId: string | undefined
-    limit?: number
-    page: number | string
+    category: string
+    eventId: string
+    limit: number
+    page: number
 }
 
 export type Event = {
