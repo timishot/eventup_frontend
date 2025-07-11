@@ -10,6 +10,7 @@ import Collection from "@/components/shared/Collection";
 import {getRelatedEvents} from "@/lib/actions/event";
 import {useSearchParams} from "next/navigation";
 import CheckoutButton from "@/components/shared/CheckoutButton";
+import {event} from "next/dist/build/output/log";
 
 
 type EventDetailsProps = {
@@ -43,10 +44,12 @@ const EventDetails = ({ params }: EventDetailsProps) => {
             if (!event) return;
 
             try {
+                const  category = event.category?.id || ""
                 const data = await getRelatedEvents({
-                    category: event.category?.id,
+                    category: category,
                     eventId: event.id,
                     page,
+                    limit: 6
                 });
                 setRelatedEvents(data);
             } catch (error) {

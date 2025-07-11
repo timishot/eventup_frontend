@@ -44,6 +44,7 @@ export async function getAllEvents({accessToken, query, limit = 6, page, categor
             category,
             limit: limit.toString(),
             skip: ((page - 1) * limit).toString(),
+
         });
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/?${searchParams.toString()}`, {
             method: "GET",
@@ -102,8 +103,9 @@ export async function getRelatedEvents({
                                            limit = 3,
                                        }: GetRelatedEventsByCategoryParams) {
     try {
+
         const searchParams = new URLSearchParams({
-            category,
+            category : category.toString(),
             eventId,
             page: page.toString(),
             limit: limit?.toString(),
