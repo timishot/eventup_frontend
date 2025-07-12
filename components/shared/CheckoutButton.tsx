@@ -4,10 +4,25 @@ import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import Checkout from "@/components/shared/Checkout";
+import {getAccessToken} from "@/lib/utils";
 
 const CheckoutButton = ({ event }: {event: IEvent}) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
+    const [accessToken, setAccessToken]  = useState<string>('');
+
+    useEffect(() => {
+        getAccessToken()
+            .then(data => {
+
+                setAccessToken(data.accessToken);
+
+                console.log('Access Token', data);
+            })
+            .catch(error => {
+                console.error('Failed to fetch Access Token status:', error);
+            });
+    }, []);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -23,6 +38,7 @@ const CheckoutButton = ({ event }: {event: IEvent}) => {
 
         checkAuth();
     }, []);
+
     const hasEventFinished = new Date(event.endDateTime) < new Date();
     return (
         <div className={"flex items-center gap-3"}>
@@ -37,8 +53,6 @@ const CheckoutButton = ({ event }: {event: IEvent}) => {
                             <Link href="/login">Get Tickets</Link>
                         </Button>
                     ) : <Checkout event={event} userId={userId} />}
-
-
 
                 </>
             )}

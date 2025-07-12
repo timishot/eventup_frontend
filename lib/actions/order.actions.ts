@@ -45,7 +45,7 @@ export async function createOrder(orderData: {
     buyerId: string;
     totalAmount: string;
 }) {
-    const { accessToken } = await getAccessToken();
+    const accessToken = await getAccessToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/create/`, {
         method: "POST",
         headers: {
@@ -66,3 +66,30 @@ export async function createOrder(orderData: {
 
     return res.json();
 }
+
+export async function getOrdersByUser({ page, limit = 3 }: { page: number; limit?: number }) {
+    const accessToken = await getAccessToken()
+
+    console.log("get order",accessToken)
+
+    const searchParams = new URLSearchParams({
+        limit: String(limit),
+        page: String(page),
+    })
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/orderlist/?${searchParams.toString()}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+        cache: "no-store",
+    })
+
+    if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.detail || "Failed to fetch user orders")
+    }
+
+    return res.json()
+}
+
+

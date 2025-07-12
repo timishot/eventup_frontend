@@ -8,9 +8,11 @@ import {getAccessToken} from "@/lib/utils";
 import {GetEventById} from "@/lib/actions/get/event";
 import {IEvent} from "@/types";
 import {getEventsByUser} from "@/lib/actions/event";
+import {getOrdersByUser} from "@/lib/actions/order.actions";
 
 const ProfilePage = () => {
     const [event, setEvent] = useState<IEvent[]>();
+    const [orderEvents, setOrderEvents] = useState<IEvent[]>([]);
     const [accessToken, setAccessToken]  = useState<string>('');
 
     useEffect(() => {
@@ -42,6 +44,22 @@ const ProfilePage = () => {
 
         fetchEventByUser();
     }, [accessToken]);
+
+    useEffect(() => {
+        const fetchOrderByUser = async () => {
+            try {
+                const orders = await getOrdersByUser({page:1});
+                setOrderEvents(orders.data);
+
+                console.log('Orders:', orders);
+            }catch (error) {
+                console.error("Failed to fetch event:", error);
+            }
+        }
+
+        fetchOrderByUser();
+    }, [accessToken]);
+
     console.log(event)
 
 
@@ -62,9 +80,9 @@ const ProfilePage = () => {
                 </div>
             </section>
 
-            {/*<section className={"wrapper my-8"}>*/}
-            {/*    <Collection data={events?.data || []} emptyTitle="No Event tickets purchased yet" emptyStateSubtext="No worries - plenty of exciting events to explore!" collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage" totalPages={2}/>*/}
-            {/*</section>*/}
+            <section className={"wrapper my-8"}>
+                <Collection data={orderEvents || []} emptyTitle="No Event tickets purchased yet" emptyStateSubtext="No worries - plenty of exciting events to explore!" collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage" totalPages={2}/>
+            </section>
 
             {/* Events Organized   */}
             <section className="bg-[#F6F8FD] bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
