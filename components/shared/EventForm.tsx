@@ -79,10 +79,10 @@ const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
             uploadedImageUrl = uploadedImages?.[0]?.url
         }
          console.log('Submitted values:', values);
-
+        console.log("step up create event eventform 1", accessToken)
         if (type === "Create") {
             try {
-                console.log("step up create event eventform", accessToken)
+                console.log("step up create event eventform 2", accessToken)
                 const newEvent = await CreateEvent({
                     accessToken: accessToken,
                     event: {
