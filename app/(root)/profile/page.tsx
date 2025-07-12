@@ -14,6 +14,7 @@ const ProfilePage = () => {
     const [event, setEvent] = useState<IEvent[]>();
     const [orderEvents, setOrderEvents] = useState<IEvent[]>([]);
     const [accessToken, setAccessToken]  = useState<string>('');
+    const [userId, setUserId] = useState<string | null>(null);
 
     useEffect(() => {
         getAccessToken()
@@ -48,7 +49,7 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchOrderByUser = async () => {
             try {
-                const orders = await getOrdersByUser({page:1});
+                const orders = await getOrdersByUser({userId, page:1});
                 setOrderEvents(orders.data);
 
                 console.log('Orders:', orders);
@@ -59,6 +60,21 @@ const ProfilePage = () => {
 
         fetchOrderByUser();
     }, [accessToken]);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch('/api/auth/status');
+                const data = await res.json();
+                setUserId(data.userId);
+                console.log("Auth status:", data);
+            } catch (error) {
+                console.error("Failed to fetch auth status:", error);
+            }
+        };
+
+        checkAuth();
+    }, []);
 
     console.log(event)
 

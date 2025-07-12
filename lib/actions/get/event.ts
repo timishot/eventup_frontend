@@ -1,7 +1,7 @@
 
 export async function GetEventById(id: string) {
     try {
-        const res = await fetch(`http://localhost:8000/api/events/${id}/event/`, {
+        const res = await fetch(`https://eventup-backend.onrender.com/api/events/${id}/event/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export async function GetEventById(id: string) {
 
 export async function deleteEvent({ id, path, accessToken }: { id: string; path: string; accessToken: string | null }) {
     try {
-        const res = await fetch(`http://localhost:8000/api/events/${id}/`, {
+        const res = await fetch(`https://eventup-backend.onrender.comapi/events/${id}/`, {
             method: "DELETE",
             credentials: "include",
             headers: {

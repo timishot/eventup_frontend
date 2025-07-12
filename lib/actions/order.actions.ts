@@ -3,7 +3,7 @@
 import Stripe from 'stripe';
 import { CheckoutOrderParams } from "@/types"
 import { redirect } from 'next/navigation';
-import {getAccessToken, handleError} from '../utils';
+import { handleError} from '../utils';
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -45,12 +45,10 @@ export async function createOrder(orderData: {
     buyerId: string;
     totalAmount: string;
 }) {
-    const accessToken = await getAccessToken();
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/create/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
             ...orderData,
@@ -67,10 +65,7 @@ export async function createOrder(orderData: {
     return res.json();
 }
 
-export async function getOrdersByUser({ page, limit = 3 }: { page: number; limit?: number }) {
-    const accessToken = await getAccessToken()
-
-    console.log("get order",accessToken)
+export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: string | null, page: number; limit?: number }) {
 
     const searchParams = new URLSearchParams({
         limit: String(limit),
@@ -79,7 +74,7 @@ export async function getOrdersByUser({ page, limit = 3 }: { page: number; limit
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/orderlist/?${searchParams.toString()}`, {
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
         },
         cache: "no-store",
     })
