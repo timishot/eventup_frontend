@@ -8,7 +8,7 @@ import {
 } from "@/types";
 
 export async function CreateEvent({accessToken, event, path }: CreateEventParams) {
-
+    console.log("Creating event with data:", event, "and accessToken:", accessToken);
     try {
 
         const response = await fetch(`https://eventup-backend.onrender.com/api/events/`, {
