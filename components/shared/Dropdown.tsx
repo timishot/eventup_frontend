@@ -40,7 +40,7 @@ const Dropdown = ({value, onchangeHandler} : DropdownProps) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/`, {
+                const res = await fetch(`https://eventup-backend.onrender.com/api/categories/`, {
                     method: 'GET',
                     credentials: 'include',
                 })
@@ -58,7 +58,7 @@ const Dropdown = ({value, onchangeHandler} : DropdownProps) => {
         if (!newCategory.trim()) return
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/`, {
+            const res = await fetch(`https://eventup-backend.onrender.com/categories/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
