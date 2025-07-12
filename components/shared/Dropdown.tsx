@@ -58,7 +58,7 @@ const Dropdown = ({value, onchangeHandler} : DropdownProps) => {
         if (!newCategory.trim()) return
 
         try {
-            const res = await fetch(`https://eventup-backend.onrender.com/categories/`, {
+            const res = await fetch(`https://eventup-backend.onrender.com/api/categories/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
