@@ -82,6 +82,7 @@ const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
 
         if (type === "Create") {
             try {
+                console.log("step up create event eventform", accessToken)
                 const newEvent = await CreateEvent({
                     accessToken: accessToken,
                     event: {
