@@ -3,7 +3,7 @@
 import Stripe from 'stripe';
 import { CheckoutOrderParams } from "@/types"
 import { redirect } from 'next/navigation';
-import { handleError } from '../utils';
+import {getAccessToken, handleError} from '../utils';
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -37,4 +37,32 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
     } catch (error) {
         throw error;
     }
+}
+
+export async function createOrder(orderData: {
+    stripeId: string;
+    eventId: string;
+    buyerId: string;
+    totalAmount: string;
+}) {
+    const { accessToken } = await getAccessToken();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/create/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+            ...orderData,
+            event_id: orderData.eventId,
+            buyer_id: orderData.buyerId,
+        }),
+    });
+
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.detail || "Failed to create order");
+    }
+
+    return res.json();
 }
