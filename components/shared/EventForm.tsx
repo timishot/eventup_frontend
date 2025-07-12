@@ -100,6 +100,7 @@ const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
                 });
 
                 if (newEvent) {
+                    console.log("create event", newEvent)
                     form.reset();
                     Router.push(`/events/${newEvent.id}`);
                 }
