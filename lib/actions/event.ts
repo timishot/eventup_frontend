@@ -11,7 +11,7 @@ export async function CreateEvent({accessToken, event, path }: CreateEventParams
 
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/`, {
+        const response = await fetch(`https://eventup-backend.onrender.com/api/events/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
