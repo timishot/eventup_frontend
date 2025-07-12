@@ -100,6 +100,8 @@ const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
                     path: "/profile",
                 });
 
+                console.log("step up create event eventform 3", newEvent)
+
                 if (newEvent) {
                     console.log("create event", newEvent)
                     form.reset();
