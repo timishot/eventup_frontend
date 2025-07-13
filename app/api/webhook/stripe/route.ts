@@ -22,18 +22,25 @@ export async function POST(request: Request) {
 
     // CREATE
     if (eventType === 'checkout.session.completed') {
-        const { id, amount_total, metadata } = event.data.object
+        try {
+            const { id, amount_total, metadata } = event.data.object
 
-        const order = {
-            stripeId: id,
-            eventId: metadata?.eventId || '',
-            buyerId: metadata?.buyerId || '',
-            totalAmount: amount_total ? (amount_total / 100).toString() : '0',
-            createdAt: new Date(),
+            const order = {
+                stripeId: id,
+                eventId: metadata?.eventId || '',
+                buyerId: metadata?.buyerId || '',
+                totalAmount: amount_total ? (amount_total / 100).toString() : '0',
+                createdAt: new Date(),
+            }
+
+            console.log('✅ Webhook order:', order)
+
+            const newOrder = await createOrder(order)
+            return NextResponse.json({ message: 'OK', order: newOrder })
+        } catch (err) {
+            console.error('🔥 Failed to create order from webhook:', err)
+            return NextResponse.json({ message: 'Internal error', error: `${err}` }, { status: 500 })
         }
-        console.log("webhook order", order)
-        const newOrder = await createOrder(order)
-        return NextResponse.json({ message: 'OK', order: newOrder })
     }
 
     return new Response('', { status: 200 })
