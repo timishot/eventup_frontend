@@ -10,11 +10,13 @@ import MobileNav from "@/components/shared/MobileNav";
 
 import { useEffect, useState } from "react";
 import {useRouter} from "next/navigation";
+import {getAccessToken} from "@/lib/utils";
 
 const Header = () => {
     const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
+    const [accessToken, setAccessToken]  = useState<string | null>(null);
 
     const handleLogout = async () => {
         try {
@@ -26,13 +28,22 @@ const Header = () => {
                 console.log('✅ Logged out');
                 setIsAuthenticated(false);
                 setUserId(null);
+                setAccessToken(null);
+
                 router.push('/');
+                router.refresh();
                 // Optionally redirect or refresh UI
             } else {
                 console.error('Logout failed');
             }
         } catch (err) {
             console.error('Logout error:', err);
+            console.error('Logout error:', err);
+            setIsAuthenticated(false);
+            setUserId(null);
+            setAccessToken(null);
+            router.push('/');
+            router.refresh();
         }
     }
 
@@ -51,6 +62,24 @@ const Header = () => {
 
         checkAuth();
     }, []);
+
+    useEffect(() => {
+        getAccessToken()
+            .then(data => {
+                if (!data.accessToken) {
+                    console.warn('⚠️ Access token is missing, logging out...');
+                    handleLogout(); // logout and redirect
+                } else {
+                    setAccessToken(data.accessToken);
+                    console.log('✅ Access Token:', data.accessToken);
+                }
+            })
+            .catch(error => {
+                console.error('Failed to fetch Access Token:', error);
+                handleLogout(); // fallback logout if token fetch fails
+            });
+    }, []);
+
     return (
         <header className="w-full  shadow">
             <div className="wrapper flex items-center justify-between">
