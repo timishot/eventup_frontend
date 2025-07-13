@@ -32,6 +32,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
             success_url: `https://eventup-frontend.vercel.app/profile`,
             cancel_url: `https://eventup-frontend.vercel.app/`,
         });
+        console.log('Stripe session created:', session);
 
         redirect(session.url!);
     } catch (error) {
