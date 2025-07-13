@@ -6,37 +6,41 @@ import Collection from "@/components/shared/Collection";
 import {getAllEvents} from "@/lib/actions/event";
 import {useEffect, useState} from "react";
 import {getAccessToken} from "@/lib/utils";
+import {SearchParamProps} from "@/types";
+import Search from "@/components/shared/Search";
 
-export default function Home() {
+export default function Home({ searchParams  } : SearchParamProps) {
+    const page = Number(searchParams?.page) || 1;
+    const searchText = (searchParams?.query as string || '');
+    const category = (searchParams?.category as string || '');
+
     const [accessToken, setAccessToken]  = useState<string | null>(null);
     const [events, setEvents] = useState<any>([]);
 
-    useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const data = await getAccessToken();
+            if (!data?.accessToken) return;
 
-        getAccessToken()
-            .then(async (data) => {
-                console.log('Access Token data T:', data);
-                if (!data?.accessToken) return;
+            setAccessToken(data.accessToken);
 
-                setAccessToken(data.accessToken);
-                console.log('Access Token play', data);
-
-                // ✅ Now safe to call fetchData
-                const events = await getAllEvents({
-                    query: '',
-                    category: '',
-                    page: 1,
-                    limit: 6,
-                    accessToken: data.accessToken,
-                });
-
-                setEvents(events);
-                console.log("this is my event: ",events);
-            })
-            .catch(error => {
-                console.error('Failed to fetch Access Token:', error);
+            const events = await getAllEvents({
+                query: searchText,
+                category,
+                page: 1,
+                limit: 6,
+                accessToken: data.accessToken,
             });
-    }, []);
+
+            setEvents(events);
+        } catch (error) {
+            console.error('Failed to fetch Access Token:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [searchText, category]);
   return (
       <>
           <section className="bg-[#F6F8FD] bg-contain py-5 md-py-10">
