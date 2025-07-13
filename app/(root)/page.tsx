@@ -63,7 +63,7 @@ export default function Home() {
           <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
               <h2 className="font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px]">Trust by <br/> Thousands of Events</h2>
               <div className="flex w-full flex-col gap-5 md:flex-row">
-                  Search
+                  <Search />
                   CategoryFilter
               </div>
               <Collection data={events?.data || []} emptyTitle="No Events Found" emptyStateSubtext="Come back later" collectionType="All_Events" limit={6} page={1} totalPages={2}/>
