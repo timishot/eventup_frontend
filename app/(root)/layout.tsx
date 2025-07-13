@@ -15,8 +15,9 @@ export default function RootLayout({
             <AuthProvider>
                 <Header/>
                 <main className="flex-1">
-                    <Suspense fallback={<Loading />} />
-                    {children}
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
                 </main>
                 <Footer/>
             </AuthProvider>
