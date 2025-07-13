@@ -9,6 +9,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
     const price = order.isFree ? 0 : Number(order.price) * 100;
+    console.log('Creating Stripe session for order:', order);
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -32,7 +33,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
             success_url: `https://eventup-frontend.vercel.app/profile`,
             cancel_url: `https://eventup-frontend.vercel.app/`,
         });
-        console.log('Stripe session created:', session);
+
 
         redirect(session.url!);
     } catch (error) {
