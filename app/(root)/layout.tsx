@@ -2,6 +2,8 @@
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import {AuthProvider} from "@/app/context/AuthContext";
+import Loading from "@/components/shared/Loading";
+import {Suspense} from "react";
 
 export default function RootLayout({
                                        children,
@@ -13,6 +15,7 @@ export default function RootLayout({
             <AuthProvider>
                 <Header/>
                 <main className="flex-1">
+                    <Suspense fallback={<Loading />} />
                     {children}
                 </main>
                 <Footer/>
