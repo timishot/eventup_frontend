@@ -8,11 +8,14 @@ import {useEffect, useState} from "react";
 import {getAccessToken} from "@/lib/utils";
 import {SearchParamProps} from "@/types";
 import Search from "@/components/shared/Search";
+import {useSearchParams} from "next/navigation";
 
-export default function Home({ searchParams  } : SearchParamProps) {
-    const page = Number(searchParams?.page) || 1;
-    const searchText = (searchParams?.query as string || '');
-    const category = (searchParams?.category as string || '');
+export default function Home() {
+
+    const searchParams = useSearchParams();
+    const page = Number(searchParams.get("page") || "1");
+    const searchText = searchParams.get("query") || "";
+    const category = searchParams.get("category") || "";
 
     const [accessToken, setAccessToken]  = useState<string | null>(null);
     const [events, setEvents] = useState<any>([]);
