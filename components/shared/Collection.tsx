@@ -1,12 +1,13 @@
 import { IEvent } from "@/types";
 import Card from "@/components/shared/Card";
+import Pagination from "@/components/shared/Pagination";
 
 
 type CollectionProps = {
     data: IEvent[];
     emptyTitle: string;
     emptyStateSubtext: string;
-    page: number;
+    page: number | string;
     limit: number;
     totalPages?: number;
     collectionType: "All_Events" | "My_Tickets" | "Events_Organized";
@@ -38,6 +39,9 @@ const Collection = ({
                             )
                         })}
                     </ul>
+                    {totalPages > 1 && (
+                            <Pagination page={page} totalPages={totalPages} urlParamName={urlParamName} />
+                    )}
                 </div>
             ) : (
                 <div className="flex justify-center items-center max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-gray-50 py-28 text-center">

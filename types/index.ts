@@ -71,6 +71,11 @@ export interface IEvent {
     };
 }
 
+export interface ICategory {
+    id: string;
+    name: string;
+}
+
 export type DeleteEventParams = {
     eventId: string
     path: string

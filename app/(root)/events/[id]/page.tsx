@@ -123,7 +123,7 @@ const EventDetails = ({ params }: EventDetailsProps) => {
             {/*  Event From the same organizer */}
             <section className="max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full my-8 flex flex-col gap-8 md:gap-12">
                 <h2 className="font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px]">Related Events</h2>
-                <Collection data={relatedEvents?.data || []} emptyTitle="No Events Found" emptyStateSubtext="Come back later" collectionType="All_Events" limit={6} page={1} totalPages={2}/>
+                <Collection data={relatedEvents?.data || []} emptyTitle="No Events Found" emptyStateSubtext="Come back later" collectionType="All_Events" limit={3} page={page as string} totalPages={relatedEvents?.totalPages}/>
             </section>
         </>
 
