@@ -63,6 +63,7 @@ const Header = () => {
         checkAuth();
     }, []);
 
+
     useEffect(() => {
         getAccessToken()
             .then(data => {
