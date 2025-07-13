@@ -9,6 +9,7 @@ import {getAccessToken} from "@/lib/utils";
 import {SearchParamProps} from "@/types";
 import Search from "@/components/shared/Search";
 import {useSearchParams} from "next/navigation";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 
 export default function Home() {
 
@@ -71,7 +72,7 @@ export default function Home() {
               <h2 className="font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px]">Trust by <br/> Thousands of Events</h2>
               <div className="flex w-full flex-col gap-5 md:flex-row">
                   <Search />
-                  CategoryFilter
+                  <CategoryFilter />
               </div>
               <Collection data={events?.data || []} emptyTitle="No Events Found" emptyStateSubtext="Come back later" collectionType="All_Events" limit={6} page={page} totalPages={events?.totalPages}/>
           </section>
