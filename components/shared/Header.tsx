@@ -69,7 +69,7 @@ const Header = () => {
             .then(data => {
                 if (!data.accessToken) {
                     console.warn('⚠️ Access token is missing, logging out...');
-                    handleLogout(); // logout and redirect
+                    handleLogout();
                 } else {
                     setAccessToken(data.accessToken);
                     console.log('✅ Access Token:', data.accessToken);
@@ -77,7 +77,7 @@ const Header = () => {
             })
             .catch(error => {
                 console.error('Failed to fetch Access Token:', error);
-                handleLogout(); // fallback logout if token fetch fails
+                handleLogout();
             });
     }, []);
 
@@ -106,7 +106,7 @@ const Header = () => {
                     </div>
                 ) : (
                     <div className="flex items-center justify-center gap-4">
-                        <Link href="/profile" className="text-sm font-medium hover:underline">Profile</Link>
+                        <Link href={`/profile/${userId}`} className="text-sm font-medium hover:underline">Profile</Link>
                         <MobileNav/>
                         <Button onClick={handleLogout} className="rounded-full bg-blue-500 transition text-white cursor-pointer duration-300 ease-in-out hover:scale-105">logout</Button>
                     </div>

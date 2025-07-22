@@ -51,13 +51,14 @@ export default function SignUpPage() {
 
         try {
             // 1. Register user with Django backend
-            const res = await fetch("https://eventup-backend.onrender.com/api/auth/register/", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
                 },
                 body: JSON.stringify(values),
+
             });
 
             if (!res.ok) {
@@ -90,7 +91,7 @@ export default function SignUpPage() {
             }
 
             // 3. Redirect or update UI
-            router.push("/");
+            router.push("/interest");
         } catch (err) {
             if (err instanceof Error) {
                 console.error("Signup error:", err.message);
@@ -209,7 +210,7 @@ export default function SignUpPage() {
                         )}
                     />
 
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full bg-blue-500 text-white font-bold">
                         Sign Up
                     </Button>
                 </form>

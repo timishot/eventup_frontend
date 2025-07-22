@@ -89,10 +89,29 @@ export type GetAllEventsParams = {
     page: number
 }
 
+export type AllEventsParams ={
+    query: string
+    category: string
+    limit: number
+    page: number
+}
+
+export interface IUser {
+    id: string;
+    username: string | null;
+    email: string;
+}
+
 export type GetEventsByUserParams = {
     accessToken: string;
     page?: number;
     limit?: number;
+}
+
+export type GetEventsByProfileUserParams = {
+    userId: string | null
+    limit?: number
+    page?: number
 }
 
 export type GetRelatedEventsByCategoryParams = {
@@ -172,4 +191,27 @@ export type RemoveUrlQueryParams = {
 export type SearchParamProps = {
     params: Promise<{ id: string }>;
     searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export interface IRelationship {
+    id: string;
+    follower: {
+        id: string;
+        username: string | null;
+        email: string;
+    };
+    followee: {
+        id: string;
+        username: string | null;
+        email: string;
+
+    };
+    created_at: string;
+}
+
+export interface IUser {
+    id: string;
+    username: string | null;
+    email: string;
+    avatar?: string;
 }

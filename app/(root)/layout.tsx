@@ -4,6 +4,7 @@ import Footer from "@/components/shared/Footer";
 import {AuthProvider} from "@/app/context/AuthContext";
 import Loading from "@/components/shared/Loading";
 import {Suspense} from "react";
+import {Toaster} from "@/components/ui/sonner";
 
 export default function RootLayout({
                                        children,
@@ -17,6 +18,7 @@ export default function RootLayout({
                 <main className="flex-1">
                     <Suspense fallback={<Loading />}>
                         {children}
+                        <Toaster richColors position="top-right" />
                     </Suspense>
                 </main>
                 <Footer/>

@@ -8,7 +8,7 @@ import {DeleteConfirmation} from "@/components/shared/DeleteConfirmation";
 
 
 type CardProps = {
-    event: IEvent
+    event: IEvent,
     hasOrderLink?: boolean,
     hidePrice?: boolean
 }
@@ -65,9 +65,11 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     <span className="text-[14px] font-semibold leading-[20px] bg-green-100 px-4 py-1 text-green-600 ">
                         {event.isFree ? 'FREE' : `₦${event.price}`}
                     </span>
+
                     <p className="text-[14px] font-semibold leading-[20px] w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-500">
                         {event.category?.name}
                     </p>
+
                 </div>}
 
                 <p className="text-[16px] font-medium leading-[24px] md:text-[18px] md:font-medium md:leading-[28px] text-gray-500">
@@ -80,9 +82,11 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
 
                 <div className="flex justify-between items-center w-full">
-                    <p className="text-[14px] font-medium leading-[20px] md:text-[16px] md:font-medium md:leading-[24px] text-gray-600">
-                        {event.organizer?.username || 'Unknown Organizer'}
-                    </p>
+                    <Link href={`/profile/${event.organizer?.id}`} className="cursor-pointer" >
+                        <p className="text-[14px] font-medium leading-[20px] md:text-[16px] md:font-medium md:leading-[24px] text-gray-600">
+                            {event.organizer?.username || 'Unknown Organizer'}
+                        </p>
+                    </Link>
 
                     {hasOrderLink && (
                         <Link href={`/orders?eventId=${event.id}`} className="flex gap-2">

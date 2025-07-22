@@ -23,7 +23,7 @@ const CategoryFilter = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch(`https://eventup-backend.onrender.com/api/categories/`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/`, {
                     method: 'GET',
                     credentials: 'include',
                 })

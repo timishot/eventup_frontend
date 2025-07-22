@@ -30,8 +30,8 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
                 buyerId: order.buyerId || "",
             },
             mode: 'payment',
-            success_url: `https://eventup-frontend.vercel.app/profile`,
-            cancel_url: `https://eventup-frontend.vercel.app/`,
+            success_url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/profile`,
+            cancel_url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/`,
         });
 
 

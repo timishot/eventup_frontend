@@ -351,7 +351,7 @@ const EventForm = ({userId, type, event, eventId }: EventFormProps ) => {
                     />
                 </div>
 
-                <Button type="submit" disabled={form.formState.isSubmitted || !accessToken} size="lg" className="rounded-full h-[54px] p-regular-16 col-span-2 w-full bg-blue-500 text-white" >{form.formState.isSubmitted ? ('Submitting...'): `${type} Event`}</Button>
+                <Button type="submit" disabled={form.formState.isSubmitted || !accessToken} size="lg" className="rounded-full h-[54px] text-[16px] font-normal leading-[24px] col-span-2 w-full bg-blue-500 text-white" >{form.formState.isSubmitted ? ('Submitting...'): `${type} Event`}</Button>
             </form>
         </Form>
     )

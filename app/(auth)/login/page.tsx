@@ -40,7 +40,7 @@ export default function LoginPage() {
     const onSubmit = async (values: z.infer<typeof loginSchema>) => {
         setError('');
         try {
-            const res = await fetch('https://eventup-backend.onrender.com/api/auth/login/', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function LoginPage() {
                         )}
                     />
 
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full bg-blue-500 text-white font-bold">
                         Log In
                     </Button>
                 </form>

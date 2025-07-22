@@ -1,7 +1,7 @@
 
 export async function GetEventById(id: string) {
     try {
-        const res = await fetch(`https://eventup-backend.onrender.com/api/events/${id}/event/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}/event/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
