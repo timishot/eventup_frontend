@@ -54,7 +54,7 @@ const ProfilePage = () => {
                 const orders = await getOrdersByUser({userId, page:1});
                 setOrderEvents(orders.data.event);
 
-                console.log('Orders:', orders);
+                console.log('Orders:', orderEvents);
             }catch (error) {
                 console.error("Failed to fetch event:", error);
             }
