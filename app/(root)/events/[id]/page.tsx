@@ -53,9 +53,24 @@ const EventDetails = ({ params }: EventDetailsProps) => {
                 const data = await GetEventById(id);
                 setEvent(data);
                 const tokenData = await getAccessToken();
-                setAccessToken(tokenData.accessToken);
-                setIsCreator(tokenData.userId === data.organizer?.id);
 
+                setAccessToken(tokenData.accessToken);
+
+
+                useEffect(() => {
+                    const checkAuth = async () => {
+                        try {
+                            const res = await fetch('/api/auth/status');
+                            const data = await res.json();
+                            setIsCreator(data.isAuthenticated && data.userId === data.organizer?.id);
+                            console.log("Auth status:", data);
+                        } catch (error) {
+                            console.error("Failed to fetch auth status:", error);
+                        }
+                    };
+
+                    checkAuth();
+                }, []);
                 // Fetch polls
                 const pollsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/polls/${id}/polls/`, {
                     headers: {
@@ -263,32 +278,7 @@ const EventDetails = ({ params }: EventDetailsProps) => {
         }
     };
 
-    // const handleAnswerSubmit = async (questionId: string) => {
-    //     if (!ws || ws.readyState !== WebSocket.OPEN) {
-    //         console.error("WebSocket not connected:", ws?.readyState);
-    //         toast.error("Cannot submit answer: WebSocket connection is not open.");
-    //         return;
-    //     }
-    //     if (!accessToken) {
-    //         console.error("No access token available");
-    //         toast.error("Please log in to submit an answer.");
-    //         return;
-    //     }
-    //     if (!answerInput[questionId]) {
-    //         console.error("No answer provided for question:", questionId);
-    //         toast.error("Please enter an answer.");
-    //         return;
-    //     }
-    //     try {
-    //         const payload = { action: "new_answer", question_id: questionId, text: answerInput[questionId] };
-    //         console.log("Sending answer:", JSON.stringify(payload, null, 2));
-    //         ws.send(JSON.stringify(payload));
-    //         setAnswerInput((prev) => ({ ...prev, [questionId]: '' }));
-    //     } catch (error: any) {
-    //         console.error("Failed to send answer:", error);
-    //         toast.error(`Failed to submit answer: ${error.message}`);
-    //     }
-    // };
+
     const handleAnswerSubmit = async (questionId: string) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) {
             console.error("WebSocket not connected:", ws?.readyState);

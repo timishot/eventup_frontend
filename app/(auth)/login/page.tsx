@@ -71,14 +71,7 @@ export default function LoginPage() {
 
             router.push('/');
 
-            // You can store the access token, e.g. in localStorage
-            // if(data.access){
-            //     await handleLogin(data.user.id, data.access, data.refresh);
-            // }
-            // console.log('Storing access token:', data.access);
 
-            // // localStorage.setItem('accessToken', data.access);
-            // router.push('/'); // Redirect to dashboard/home
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
