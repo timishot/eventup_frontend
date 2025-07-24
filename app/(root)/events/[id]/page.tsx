@@ -57,20 +57,6 @@ const EventDetails = ({ params }: EventDetailsProps) => {
                 setAccessToken(tokenData.accessToken);
 
 
-                useEffect(() => {
-                    const checkAuth = async () => {
-                        try {
-                            const res = await fetch('/api/auth/status');
-                            const data = await res.json();
-                            setIsCreator(data.isAuthenticated && data.userId === data.organizer?.id);
-                            console.log("Auth status:", data);
-                        } catch (error) {
-                            console.error("Failed to fetch auth status:", error);
-                        }
-                    };
-
-                    checkAuth();
-                }, []);
                 // Fetch polls
                 const pollsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/polls/${id}/polls/`, {
                     headers: {
@@ -122,6 +108,21 @@ const EventDetails = ({ params }: EventDetailsProps) => {
         };
         fetchEventAndPollsAndQuestions();
     }, [id]);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch('/api/auth/status');
+                const data = await res.json();
+                setIsCreator(data.userId == event?.organizer?.id);
+                console.log("Auth status:", data);
+            } catch (error) {
+                console.error("Failed to fetch auth status:", error);
+            }
+        };
+
+        checkAuth();
+    }, [event]);
 
     useEffect(() => {
         const fetchRelated = async () => {
