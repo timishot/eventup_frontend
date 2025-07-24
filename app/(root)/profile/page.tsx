@@ -12,7 +12,7 @@ import {getOrdersByUser} from "@/lib/actions/order.actions";
 
 const ProfilePage = () => {
     const [event, setEvent] = useState<IEvent[]>();
-    const [orderEvents, setOrderEvents] = useState<IEvent[]>([]);
+    const [orderEvents, setOrderEvents] = useState<any>([]);
     const [accessToken, setAccessToken]  = useState<string>('');
     const [userId, setUserId] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ const ProfilePage = () => {
 
             try {
                 const organizedEvents = await getEventsByUser({ accessToken, page: 1 });
-                setEvent(organizedEvents.data);
+                setEvent(organizedEvents);
                 console.log(event)
             } catch (error) {
                 console.error("Failed to fetch event:", error);
@@ -99,7 +99,7 @@ const ProfilePage = () => {
             </section>
 
             <section className={"wrapper my-8"}>
-                <Collection data={orderEvents || []} emptyTitle="No Event tickets purchased yet" emptyStateSubtext="No worries - plenty of exciting events to explore!" collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage" totalPages={2}/>
+                <Collection data={orderEvents?.data || []} emptyTitle="No Event tickets purchased yet" emptyStateSubtext="No worries - plenty of exciting events to explore!" collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage" totalPages={2}/>
             </section>
 
             {/* Events Organized   */}
