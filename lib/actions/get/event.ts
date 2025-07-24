@@ -23,7 +23,7 @@ export async function GetEventById(id: string) {
 
 export async function deleteEvent({ id, path, accessToken }: { id: string; path: string; accessToken: string | null }) {
     try {
-        const res = await fetch(`https://eventup-backend.onrender.comapi/events/${id}/`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}/`, {
             method: "DELETE",
             credentials: "include",
             headers: {
