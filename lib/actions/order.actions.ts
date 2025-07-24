@@ -68,8 +68,11 @@ export async function createOrder(orderData: {
 }
 
 export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: string | null, page: number; limit?: number }) {
-
+    if (!userId) {
+        throw new Error("User ID is required to fetch orders");
+    }
     const searchParams = new URLSearchParams({
+        userId: userId || "",
         limit: String(limit),
         page: String(page),
     })
@@ -78,9 +81,6 @@ export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: str
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            userId: userId,
-        }),
         cache: "no-store",
     })
 

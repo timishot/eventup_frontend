@@ -38,6 +38,7 @@ const ProfilePage = () => {
             try {
                 const organizedEvents = await getEventsByUser({ accessToken, page: 1 });
                 setEvent(organizedEvents.data);
+                console.log("my event",event)
             } catch (error) {
                 console.error("Failed to fetch event:", error);
             }
@@ -49,6 +50,7 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchOrderByUser = async () => {
             try {
+                if (!userId) return; // 🔒 don't fetch until userId exists
                 const orders = await getOrdersByUser({userId, page:1});
                 setOrderEvents(orders.data);
 
@@ -59,7 +61,7 @@ const ProfilePage = () => {
         }
 
         fetchOrderByUser();
-    }, [accessToken]);
+    }, [accessToken, userId]);
 
     useEffect(() => {
         const checkAuth = async () => {
