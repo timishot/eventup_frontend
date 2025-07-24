@@ -52,7 +52,7 @@ const Checkout = ({ event, userId }: { event: IEvent, userId: string | null}) =>
             buyerId: userId
         }
         console.log('Order details:', order);
-        // await checkoutOrder(order);
+        await checkoutOrder(order);
     }
 
     return (
