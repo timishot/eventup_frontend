@@ -78,6 +78,9 @@ export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: str
         headers: {
             "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+            userId: userId,
+        }),
         cache: "no-store",
     })
 
