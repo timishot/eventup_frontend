@@ -37,7 +37,7 @@ const ProfilePage = () => {
 
             try {
                 const organizedEvents = await getEventsByUser({ accessToken, page: 1 });
-                setEvent(organizedEvents);
+                setEvent(organizedEvents.data);
                 console.log(event)
             } catch (error) {
                 console.error("Failed to fetch event:", error);
@@ -52,7 +52,7 @@ const ProfilePage = () => {
             try {
                 if (!userId) return; // 🔒 don't fetch until userId exists
                 const orders = await getOrdersByUser({userId, page:1});
-                setOrderEvents(orders.data);
+                setOrderEvents(orders.data.event);
 
                 console.log('Orders:', orders);
             }catch (error) {
