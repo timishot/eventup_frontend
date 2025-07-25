@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import {useAuth} from "@/app/context/AuthContext";
+import Link from "next/link";
 
 
 const loginSchema = z.object({
@@ -84,50 +85,72 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-16 space-y-6 px-4">
-            <div className="flex justify-center">
-                <Image src="/assets/icon/logo.png" alt="logo" width={128} height={38} />
+        <>
+            <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
+                <div className="max-w-md mx-auto mt-16 space-y-6 px-4">
+                    <div className="flex justify-center">
+                        <Image src="/assets/icon/logo.png" alt="logo" width={128} height={38}/>
+                    </div>
+                    <h1 className="text-[32px] leading-[36px] font-bold md:text-[36px] md:leading-[40px] md:font-bold">Welcome
+                        back!</h1>
+                    <p className="text-[20px] leading-[36px] font-normal">Fill in your details.</p>
+
+                    {error && <div className="text-red-500 text-sm text-center">{error}</div>}
+
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="example@mail.com" {...field}
+                                                   className="bg-[#F6F6F6] h-[54px] w-[400px]  focus-visible:ring-offset-0 placeholder:text-[#757575] rounded-sm text-[16px] font-normal leading-[24px] px-4 py-3 border-none focus-visible:ring-transparent !important"/>
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <Input type="password" placeholder="********" {...field}
+                                                   className="bg-[#F6F6F6] w-[400px] h-[54px] focus-visible:ring-offset-0 placeholder:text-[#757575] rounded-sm text-[16px] font-normal leading-[24px] px-4 py-3 border-none focus-visible:ring-transparent !important"/>
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
+
+                            <Button type="submit" className="w-full bg-blue-500 text-white font-bold">
+                                Log In
+                            </Button>
+                        </form>
+                    </Form>
+                    <p className="text-base font-normal text-gray-400">
+                        Don't have an account {" "}
+                        <Link
+                            href="/signup"
+                            className="font-bold text-blue-500"
+                        >
+                            Create an account
+                        </Link>
+                    </p>
+
+                </div>
+                <div className="w-full h-screen hidden md:block">
+                    <Image src="/assets/images/fix.jpg" alt="login" width={1000} height={1000}
+                           className="h-screen object-cover"/>
+                </div>
             </div>
-            <h1 className="text-2xl font-bold text-center">Login to Eventup</h1>
-            <p className="text-center text-muted-foreground">Welcome back!</p>
 
-            {error && <div className="text-red-500 text-sm text-center">{error}</div>}
-
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="example@mail.com" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input type="password" placeholder="********" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <Button type="submit" className="w-full bg-blue-500 text-white font-bold">
-                        Log In
-                    </Button>
-                </form>
-            </Form>
-        </div>
+        </>
     );
 }
