@@ -105,7 +105,7 @@ export async function getOrdersByEvent({ eventId, searchString }: { eventId: str
         searchString: searchString || "",
     })
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/event-orders/?${searchParams.toString()}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/event-orders/?${searchParams.toString()}`, {
         headers: {
             "Content-Type": "application/json",
         },
