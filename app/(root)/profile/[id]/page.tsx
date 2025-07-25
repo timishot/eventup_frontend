@@ -78,7 +78,7 @@ const UserProfilePage = ({ params }: UserProfileProps) => {
         const fetchOrderByUser = async () => {
             try {
                 if (!userId) return; // 🔒 don't fetch until userId exists
-                const orders = await getOrdersByUser({userId:id, page:1});
+                const orders = await getOrdersByUser({userId, page:1});
                 setOrderEvents(orders.data);
 
                 console.log('Orders:', orderEvents);
@@ -208,7 +208,7 @@ const UserProfilePage = ({ params }: UserProfileProps) => {
                         </div>
                     </section>
                     <section className={"wrapper my-8"}>
-                        <Collection data={orderEvents || []} emptyTitle="No Event tickets purchased yet"
+                        <Collection data={orderEvents?.data  || []} emptyTitle="No Event tickets purchased yet"
                                     emptyStateSubtext="No worries - plenty of exciting events to explore!"
                                     collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage"
                                     totalPages={2}/>
