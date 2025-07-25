@@ -1,7 +1,7 @@
 "use server"
 
 import Stripe from 'stripe';
-import {CheckoutOrderParams, GetOrdersByEventParams} from "@/types"
+import {CheckoutOrderParams, GetOrdersByEventParams, IOrderItem} from "@/types"
 import { redirect } from 'next/navigation';
 import { handleError} from '../utils';
 
@@ -95,7 +95,13 @@ export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: str
     return res.json()
 }
 
-export async function getOrdersByEvent({ eventId, searchString }: { eventId: string; searchString: string }) {
+export async function getOrdersByEvent({
+                                           eventId,
+                                           searchString,
+                                       }: {
+    eventId: string;
+    searchString: string;
+}): Promise<IOrderItem[]> {
     if (!eventId) {
         throw new Error("Event ID is required to fetch orders")
     }

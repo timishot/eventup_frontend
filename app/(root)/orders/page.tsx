@@ -12,11 +12,14 @@ const Orders = async () => {
     const searchText = searchParams.get("query") || "";
 
 
-    let orders: IOrderItem[] = []
+    let orders: IOrderItem[] = [];
+    let errorMessage: string | null = null;
+
     try {
-        orders = await getOrdersByEvent({ eventId, searchString: searchText })
+        orders = await getOrdersByEvent({ eventId, searchString: searchText });
     } catch (error) {
-        console.error("Failed to fetch orders:", error)
+        console.error('Failed to fetch orders:', error);
+        errorMessage = 'Failed to load orders. Please try again later.';
     }
 
     return (
