@@ -97,11 +97,11 @@ const Header = () => {
                 {!isAuthenticated ? (
                     <div className="flex gap-4">
                         <Button asChild className="rounded-full bg-blue-500 transition duration-300 ease-in-out hover:scale-105"  size="lg">
-                            <Link href="/login" className="text-[24px] font-medium   text-white">Login</Link>
+                            <Link href="/login" className=" text-[16px] md:text-[24px] font-medium   text-white">Login</Link>
                         </Button>
 
                         <Button asChild className="rounded-full border border-blue-500 transition duration-300 ease-in-out hover:bg-blue-500 hover:scale-105" size="lg">
-                            <Link href="/signup" className="text-[24px] font-medium text-blue-500  hover:text-white">Sign Up</Link>
+                            <Link href="/signup" className="text-[16px] md:text-[24px] font-medium text-blue-500  hover:text-white">Sign Up</Link>
                         </Button>
                     </div>
                 ) : (
