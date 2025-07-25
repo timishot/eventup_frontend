@@ -1,12 +1,16 @@
+'use client'
 import Search  from '@/components/shared/Search'
 import { getOrdersByEvent } from '@/lib/actions/order.actions'
 import { formatDateTime, formatPrice } from '@/lib/utils'
 import {IOrderItem, SearchParamProps} from '@/types'
+import {useSearchParams} from "next/navigation";
 
 
-const Orders = async ({ searchParams }: SearchParamProps) => {
-    const eventId = (searchParams?.eventId as string) || ''
-    const searchText = (searchParams?.query as string) || ''
+const Orders = async () => {
+    const searchParams = useSearchParams();
+    const eventId = (searchParams.get("eventId ") || "");
+    const searchText = searchParams.get("query") || "";
+
 
     let orders: IOrderItem[] = []
     try {
