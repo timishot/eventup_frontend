@@ -121,6 +121,15 @@ export type GetRelatedEventsByCategoryParams = {
     page: number | string
 }
 
+export type IOrderItem = {
+    id: string
+    totalAmount: string
+    createdAt: Date
+    eventTitle: string
+    eventId: string
+    buyer: string
+}
+
 export type Event = {
     _id: string
     title: string

@@ -1,7 +1,7 @@
 "use server"
 
 import Stripe from 'stripe';
-import { CheckoutOrderParams } from "@/types"
+import {CheckoutOrderParams, GetOrdersByEventParams} from "@/types"
 import { redirect } from 'next/navigation';
 import { handleError} from '../utils';
 
@@ -90,6 +90,31 @@ export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: str
     if (!res.ok) {
         const error = await res.json()
         throw new Error(error.detail || "Failed to fetch user orders")
+    }
+
+    return res.json()
+}
+
+export async function getOrdersByEvent({ eventId, searchString }: { eventId: string; searchString: string }) {
+    if (!eventId) {
+        throw new Error("Event ID is required to fetch orders")
+    }
+
+    const searchParams = new URLSearchParams({
+        eventId,
+        searchString: searchString || "",
+    })
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/event-orders/?${searchParams.toString()}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cache: "no-store",
+    })
+
+    if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.detail || "Failed to fetch event orders")
     }
 
     return res.json()
