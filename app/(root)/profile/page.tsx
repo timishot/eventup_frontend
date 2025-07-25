@@ -85,7 +85,7 @@ const UserProfilePage = () => {
         }
 
         fetchOrderByUser();
-    }, [accessToken, userId]);
+    }, [userId]);
 
     useEffect(() => {
         const fetchEventByUser = async () => {
