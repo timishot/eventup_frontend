@@ -208,7 +208,7 @@ const UserProfilePage = ({ params }: UserProfileProps) => {
                         </div>
                     </section>
                     <section className={"wrapper my-8"}>
-                        <Collection data={orderEvents?.data  || []} emptyTitle="No Event tickets purchased yet"
+                        <Collection data={orderEvents  || []} emptyTitle="No Event tickets purchased yet"
                                     emptyStateSubtext="No worries - plenty of exciting events to explore!"
                                     collectionType="My_Tickets" limit={3} page={1} urlParamName="ordersPage"
                                     totalPages={2}/>
