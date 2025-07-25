@@ -17,6 +17,7 @@ const NavItems = () => {
                    </li>
                )
            })}
+
        </ul>
     )
 }

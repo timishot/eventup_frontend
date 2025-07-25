@@ -80,7 +80,6 @@ const Header = () => {
                 handleLogout();
             });
     }, []);
-
     return (
         <header className="w-full  shadow">
             <div className="wrapper flex items-center justify-between">
@@ -89,6 +88,7 @@ const Header = () => {
                 </Link>
 
                 {isAuthenticated && (
+
                     <nav className="md:flex md:justify-between md: items-center hidden  w-full max-w-xs">
                         <NavItems/>
                     </nav>
@@ -96,8 +96,10 @@ const Header = () => {
 
                 {!isAuthenticated ? (
                     <div className="flex gap-4">
-                        <Button asChild className="rounded-full bg-blue-500 transition duration-300 ease-in-out hover:scale-105"  size="lg">
-                            <Link href="/login" className=" text-[16px] md:text-[24px] font-medium   text-white">Login</Link>
+                        <Button asChild
+                                className="rounded-full bg-blue-500 transition duration-300 ease-in-out hover:scale-105"
+                                size="lg">
+                        <Link href="/login" className=" text-[16px] md:text-[24px] font-medium   text-white">Login</Link>
                         </Button>
 
                         <Button asChild className="rounded-full border border-blue-500 transition duration-300 ease-in-out hover:bg-blue-500 hover:scale-105" size="lg">
@@ -106,7 +108,6 @@ const Header = () => {
                     </div>
                 ) : (
                     <div className="flex items-center justify-center gap-4">
-                        <Link href={`/profile/${userId}`} className="text-sm font-medium hover:underline">Profile</Link>
                         <MobileNav/>
                         <Button onClick={handleLogout} className="rounded-full bg-blue-500 transition text-white cursor-pointer duration-300 ease-in-out hover:scale-105">logout</Button>
                     </div>
