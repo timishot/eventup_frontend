@@ -11,6 +11,8 @@ import {IEvent} from "@/types";
 import {getOrdersByUser} from "@/lib/actions/order.actions";
 
 
+
+
 const UserProfilePage = () => {
 
     const [events, setEvents] = useState<any[]>([]);
@@ -76,9 +78,15 @@ const UserProfilePage = () => {
             try {
                 if (!userId) return; // 🔒 don't fetch until userId exists
                 const orders = await getOrdersByUser({userId, page:1});
-                setOrderEvents(orders.data);
+                // Map orders to extract event objects
+                const events = orders.data.map((order: any) => ({
+                    ...order.event,
+                    startDateTime: new Date(order.event.startDateTime), // Convert to Date
+                    endDateTime: new Date(order.event.endDateTime), // Convert to Date
+                }));
+                setOrderEvents(events);
 
-                console.log('Orders:', orderEvents);
+                console.log('Orders:', orders.data);
             }catch (error) {
                 console.error("Failed to fetch event:", error);
             }

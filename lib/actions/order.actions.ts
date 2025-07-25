@@ -5,6 +5,9 @@ import { CheckoutOrderParams } from "@/types"
 import { redirect } from 'next/navigation';
 import { handleError} from '../utils';
 
+
+
+
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 

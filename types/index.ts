@@ -58,8 +58,8 @@ export interface IEvent {
     url: string;
     price?: string;
     isFree: boolean;
-    startDateTime: Date;
-    endDateTime: Date;
+    startDateTime: string | Date;
+    endDateTime: string | Date;
     category?: {
         id: string;
         name: string;
