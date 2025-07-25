@@ -8,6 +8,7 @@ import {getEventsByProfileUser, getEventsByUser} from "@/lib/actions/event";
 import { followUser, unfollowUser, getFollowers, getFollowing, checkFollowStatus } from "@/lib/actions/relationship.actions";
 import { useParams } from "next/navigation";
 import {IEvent} from "@/types";
+import {getOrdersByUser} from "@/lib/actions/order.actions";
 
 type UserProfileProps = {
     params: Promise<{ id: string }>;
@@ -72,6 +73,22 @@ const UserProfilePage = ({ params }: UserProfileProps) => {
 
         fetchProfileData();
     }, [id, accessToken]);
+
+    useEffect(() => {
+        const fetchOrderByUser = async () => {
+            try {
+                if (!userId) return; // 🔒 don't fetch until userId exists
+                const orders = await getOrdersByUser({userId:id, page:1});
+                setOrderEvents(orders);
+
+                console.log('Orders:', orderEvents);
+            }catch (error) {
+                console.error("Failed to fetch event:", error);
+            }
+        }
+
+        fetchOrderByUser();
+    }, [accessToken, id]);
 
     useEffect(() => {
         const fetchEventByUser = async () => {

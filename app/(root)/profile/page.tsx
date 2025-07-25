@@ -37,8 +37,7 @@ const ProfilePage = () => {
 
             try {
                 const organizedEvents = await getEventsByUser({ accessToken, page: 1 });
-                setEvent(organizedEvents);
-                console.log(event)
+                setEvent(organizedEvents.data);
             } catch (error) {
                 console.error("Failed to fetch event:", error);
             }
