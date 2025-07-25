@@ -79,7 +79,7 @@ const UserProfilePage = ({ params }: UserProfileProps) => {
             try {
                 if (!userId) return; // 🔒 don't fetch until userId exists
                 const orders = await getOrdersByUser({userId:id, page:1});
-                setOrderEvents(orders);
+                setOrderEvents(orders.data);
 
                 console.log('Orders:', orderEvents);
             }catch (error) {

@@ -88,7 +88,6 @@ export async function getOrdersByUser({ userId, page, limit = 3 }: { userId: str
         const error = await res.json()
         throw new Error(error.detail || "Failed to fetch user orders")
     }
-    console.log(res.json(), "pls work")
 
     return res.json()
 }
