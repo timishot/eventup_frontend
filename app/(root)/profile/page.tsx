@@ -49,7 +49,7 @@ const UserProfilePage = () => {
 
     useEffect(() => {
         const fetchProfileData = async () => {
-            if (userId) return;
+            if (!userId) return;
 
             try {
                 const followers = await getFollowers({ userId: userId as string });
