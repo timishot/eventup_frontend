@@ -23,8 +23,8 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
 
     try {
         // Fetch orders by event ID and search text
-        const order = await getOrdersByEvent({ eventId, searchString: searchText });
-        console.log('Orders:', order);
+        orders = await getOrdersByEvent({ eventId, searchString: searchText });
+        console.log('Orders:', orders);
     } catch (error) {
         console.error('Failed to fetch orders:', error);
         errorMessage = 'Failed to load orders. Please try again later.';
