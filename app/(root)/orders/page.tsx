@@ -4,15 +4,29 @@ import { formatDateTime, formatPrice } from '@/lib/utils'
 import {IOrderItem} from '@/types'
 
 interface SearchParamProps {
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Orders = async ({ searchParams }: SearchParamProps) => {
-    const eventId = (searchParams?.eventId as string) || ''
-    const searchText = (searchParams?.query as string) || ''
+    // Resolve the searchParams Promise
+    const resolvedSearchParams = await searchParams;
+    // Normalize eventId to a string
+    const eventId = Array.isArray(resolvedSearchParams.eventId)
+        ? resolvedSearchParams.eventId[0] || '' // Take first value if array
+        : resolvedSearchParams.eventId || ''; // Use string or fallback to ''
+    const searchText = Array.isArray(resolvedSearchParams.query)
+        ? resolvedSearchParams.query[0] || '' // Take first value if array
+        : resolvedSearchParams.query || ''; // Use string or fallback to ''
 
-    const orders = await getOrdersByEvent({ eventId, searchString: searchText })
+    let orders: IOrderItem[] = [];
+    let errorMessage: string | null = null;
 
+    try {
+        orders = await getOrdersByEvent({ eventId, searchString: searchText });
+    } catch (error) {
+        console.error('Failed to fetch orders:', error);
+        errorMessage = 'Failed to load orders. Please try again later.';
+    }
     return (
         <>
             <section className=" bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
