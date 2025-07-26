@@ -10,7 +10,7 @@ interface SearchParamProps {
 const Orders = async ({ searchParams }: SearchParamProps) => {
     // Resolve the searchParams Promise
     const resolvedSearchParams = await searchParams;
-    // Normalize eventId to a string
+    // Normalize eventId to a stringtime
     const eventId = Array.isArray(resolvedSearchParams.eventId)
         ? resolvedSearchParams.eventId[0] || '' // Take first value if array
         : resolvedSearchParams.eventId || ''; // Use string or fallback to ''
@@ -22,7 +22,8 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
     let errorMessage: string | null = null;
 
     try {
-        orders = await getOrdersByEvent({ eventId, searchString: searchText });
+
+        console.log('Orders:', orders);
     } catch (error) {
         console.error('Failed to fetch orders:', error);
         errorMessage = 'Failed to load orders. Please try again later.';
