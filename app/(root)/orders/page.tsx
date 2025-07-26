@@ -22,8 +22,9 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
     let errorMessage: string | null = null;
 
     try {
-
-        console.log('Orders:', orders);
+        // Fetch orders by event ID and search text
+        const order = await getOrdersByEvent({ eventId, searchString: searchText });
+        console.log('Orders:', order);
     } catch (error) {
         console.error('Failed to fetch orders:', error);
         errorMessage = 'Failed to load orders. Please try again later.';
@@ -41,7 +42,7 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
             <section className="wrapper overflow-x-auto">
                 <table className="w-full border-collapse border-t">
                     <thead>
-                    <tr className="p-medium-14 border-b text-grey-500">
+                    <tr className="text-[14px] font-medium leading-[20px] border-b text-grey-500">
                         <th className="min-w-[250px] py-3 text-left">Order ID</th>
                         <th className="min-w-[200px] flex-1 py-3 pr-4 text-left">Event Title</th>
                         <th className="min-w-[150px] py-3 text-left">Buyer</th>
@@ -62,7 +63,7 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
                                 orders.map((row: IOrderItem) => (
                                     <tr
                                         key={row.id}
-                                        className="p-regular-14 lg:p-regular-16 border-b "
+                                        className="text-[14px] font-normal leading-[20px] lg:text-[16px] lg:font-normal lg:leading-[24px] border-b "
                                         style={{ boxSizing: 'border-box' }}>
                                         <td className="min-w-[250px] py-4 text-primary-500">{row.id}</td>
                                         <td className="min-w-[200px] flex-1 py-4 pr-4">{row.eventTitle}</td>
