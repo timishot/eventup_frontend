@@ -121,13 +121,23 @@ export type GetRelatedEventsByCategoryParams = {
     page: number | string
 }
 
-export type IOrderItem = {
-    id: string
-    totalAmount: string
-    createdAt: Date
-    eventTitle: string
-    eventId: string
-    buyer: string
+export interface IOrderItem {
+    id: string;
+    created_at: string; // ISO date string from API
+    stripe_id: string;
+    total_amount: string; // API returns as string
+    event: {
+        id: string;
+        title: string;
+    };
+    buyer: {
+        id: string;
+        username: string;
+        email: string;
+        interests: string[];
+        profession: string;
+        background: string;
+    };
 }
 
 export type Event = {

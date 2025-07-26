@@ -31,8 +31,8 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
     }
     return (
         <>
-            <section className=" bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
-                <h3 className="wrapper h3-bold text-center sm:text-left ">Orders</h3>
+            <section className=" bg-[#F6F8FD] bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
+                <h3 className="wrapper font-bold text-[28px] leading-[36px] md:text-[36px] md:leading-[44px] text-center sm:text-left ">Orders</h3>
             </section>
 
             <section className="wrapper mt-8">
@@ -66,13 +66,13 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
                                         className="text-[14px] font-normal leading-[20px] lg:text-[16px] lg:font-normal lg:leading-[24px] border-b "
                                         style={{ boxSizing: 'border-box' }}>
                                         <td className="min-w-[250px] py-4 text-primary-500">{row.id}</td>
-                                        <td className="min-w-[200px] flex-1 py-4 pr-4">{row.eventTitle}</td>
-                                        <td className="min-w-[150px] py-4">{row.buyer}</td>
+                                        <td className="min-w-[200px] flex-1 py-4 pr-4">{row.event.title}</td>
+                                        <td className="min-w-[150px] py-4">{row.buyer.username}</td>
                                         <td className="min-w-[100px] py-4">
-                                            {formatDateTime(row.createdAt).dateTime}
+                                            {formatDateTime(new Date(row.created_at)).dateTime}
                                         </td>
                                         <td className="min-w-[100px] py-4 text-right">
-                                            {formatPrice(row.totalAmount)}
+                                            {formatPrice((row.total_amount))}
                                         </td>
                                     </tr>
                                 ))}
